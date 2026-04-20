@@ -107,6 +107,8 @@ public class Pokemon {
 		Tipo = tipo;
 	}
 
-
+	public String toString() {
+	    return Pokemon + ";" + Habitat + ";" + porcentajeAparicion + ";" +Vida + ";" + Ataque + ";" + Defensa + ";" + ataqueEspecial + ";" + defensaEspecial + ";" + Velocidad + ";" + Tipo; // los atributos que tengas
+	}
 
 }

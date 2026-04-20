@@ -1,31 +1,30 @@
 //Antonia Ignacia Cáceres Calderón - 22.050.742-4 - ICCI
 //Benjamín Andrés Carrasco Santander - 21.983.969-3 - ICCI
 package taller2;
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.FileReader;
+import java.util.Random;
+
 
 public class menuPrincipal {
 	
 	//Se llaman las listas
-	static ArrayList<Habitats> habitats = new ArrayList<>();
+	
 	
 	public static void main(String[] args) {
-		
-		habitats = lectorArchivos.leerHabitats();
-		Scanner scanner = new Scanner(System.in);
-		
+		Scanner scanner = new Scanner(System.in);		
 		menuPrincipall(scanner);
-		
-
 	}
 
 	
-	public static void salirACapturar(Scanner scanner) {
+	public static ArrayList<String> salirACapturar(Scanner scanner) {
+		ArrayList<Habitats> habitats = lectorArchivos.leerHabitats();
+		ArrayList<Pokemon> pokemones = lectorArchivos.leerPokemones();
+		ArrayList<String> registros = new ArrayList<>();
+		
 		System.out.println("Donde deseas ir a explorar?");
 		System.out.println();
 		System.out.println("Zonas disponibles: ");
@@ -33,18 +32,56 @@ public class menuPrincipal {
 		
 		for (int i = 0; i < habitats.size(); i++) {
 			System.out.println((i + 1) + ") " + habitats.get(i));
+		} 
+		System.out.println("7) Volver al menu.");
+		System.out.println("\nIngrese Zona: ");
+	
+		int opcion = scanner.nextInt();
+		if (opcion == 7) {
+			System.out.print("Volviendo al menú...");
+			
+		} else {
+			String[] opcionesHabitat = {"Lago", "Cueva", "Montaña", "Bosque", "Prado", "Mar"};
+			String habitatElegido = opcionesHabitat[opcion - 1];
+			ArrayList<String> pokemonesEspecificos = new ArrayList<>();
+			
+			for (Pokemon p : pokemones) {
+				if (p.getHabitat().equals(habitatElegido)) {
+					pokemonesEspecificos.add(p.getPokemon());
+				}
+			}
+			
+			Random rand = new Random();
+			String pokemonAleatorio = pokemonesEspecificos.get(rand.nextInt(opcionesHabitat.length));
+			System.out.print("Oh!! Ha aparecido un increíble " + pokemonAleatorio + "!!");
+			System.out.println("\n¿Qué deseas hacer?\n1) Capturar. \n2) Huir.");
+			int opcion2 = scanner.nextInt();
+			
+			if (opcion2 == 1) {
+				registros.add(pokemonAleatorio);
+				reescribirRegistros("Registros.txt", registros);
+				System.out.println(pokemonAleatorio + " ha sido agregado a tu equipo!\n");
+			} else {
+				System.out.println("Huyendo...");
+			}
 			
 		}
+		return registros;
+	}
 	
+	public static void revisarEquipo() {
+		ArrayList<Pokemon> listaPokemones = lectorArchivos.leerPokemones();
+		ArrayList<String> registros = lectorArchivos.leerRegistros();
+		System.out.println("Equipo actual: ");
+
 		
 	}
 	
-	
-	public static void reescribirArchivos(String txt, String[] lista, int datos) {
+	public static void reescribirRegistros(String txt, ArrayList<String> lista) {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(txt));
-			for (int i = 0; i < datos; i++) {
-				bw.write(lista[i]);
+			for (String linea : lista) {
+				bw.write(linea);
 				bw.newLine();
 			}
 			bw.close();
@@ -59,18 +96,19 @@ public class menuPrincipal {
 	
 	public static void menuNuevaPartida(Scanner scanner) {
 		int op;
-		
+		System.out.println("Ingrese su apodo de jugador: ");
+		String apodo = scanner.nextLine();
+		System.out.println("Bienvenido " + apodo + "!!");
 		do {
-			System.out.println("Ingrese su apodo de jugador: ");
-			String apodo = scanner.nextLine();
-			System.out.println("Bienvenido " + apodo + "!!");
-			System.out.println(apodo + ", qué deseas hacer?: ");
+			System.out.println(apodo + ", ¿Qué deseas hacer?: ");
 			System.out.println("\n1) Revisar equipo.\n2) Salir a capturar.\n3) Acceso al PC.\n4) Retar un gimnasio.\n5) Desafío al Alto Mando.\n6) Curar Pokémon.\n7) Guardar.\n8) Guardar y Salir.");
 			System.out.println("Ingrese opción: ");
-			op = Integer.valueOf(scanner.nextLine());
+			op = scanner.nextInt();
 			
 			switch (op) {
-			
+				case 1:
+					revisarEquipo();
+					break;
 				case 2:
 					salirACapturar(scanner);
 					break;
@@ -92,7 +130,7 @@ public class menuPrincipal {
 	public static void menuPrincipall(Scanner scanner) {
 		int op;
 		do {
-			System.out.println("Bienvenido al juego! Ingrese alguna de las siguientes opciones: ");
+			System.out.println("Bienvenido al juego!\nIngrese alguna de las siguientes opciones: ");
 			System.out.println("1) Continuar.\n2) Nueva partida.\n3) Salir.");
 			op = Integer.parseInt(scanner.nextLine());
 			
