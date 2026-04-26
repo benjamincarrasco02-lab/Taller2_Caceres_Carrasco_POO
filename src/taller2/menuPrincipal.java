@@ -12,7 +12,9 @@ import java.util.Random;
 public class menuPrincipal {
 	
 	//Se llaman las listas
-	
+	static ArrayList<Habitats> habitats = lectorArchivos.leerHabitats();
+	static ArrayList<Pokemon> pokemones = lectorArchivos.leerPokemones();
+	static ArrayList<String> registros = new ArrayList<>();
 	
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);		
@@ -20,11 +22,8 @@ public class menuPrincipal {
 	}
 
 	
-	public static ArrayList<String> salirACapturar(Scanner scanner) {
-		ArrayList<Habitats> habitats = lectorArchivos.leerHabitats();
-		ArrayList<Pokemon> pokemones = lectorArchivos.leerPokemones();
-		ArrayList<String> registros = new ArrayList<>();
-		
+	public static ArrayList<String> salirACapturar(Scanner scanner, ArrayList<Habitats> habitats, ArrayList<Pokemon> pokemones, ArrayList<String> registros) {
+			
 		System.out.println("Donde deseas ir a explorar?");
 		System.out.println();
 		System.out.println("Zonas disponibles: ");
@@ -37,6 +36,13 @@ public class menuPrincipal {
 		System.out.println("\nIngrese Zona: ");
 	
 		int opcion = scanner.nextInt();
+		
+		while (opcion > 7) {
+			System.out.println("Opción inválida");
+			System.out.println("Ingrese Zona: ");
+			opcion = scanner.nextInt();
+		}
+		
 		if (opcion == 7) {
 			System.out.print("Volviendo al menú...");
 			
@@ -69,13 +75,30 @@ public class menuPrincipal {
 		return registros;
 	}
 	
-	public static void revisarEquipo() {
-		ArrayList<Pokemon> listaPokemones = lectorArchivos.leerPokemones();
-		ArrayList<String> registros = lectorArchivos.leerRegistros();
-		System.out.println("Equipo actual: ");
+	public static void revisarEquipo(ArrayList<Pokemon> listaPokemones, ArrayList<String> registros) {
+		
+		System.out.println("Equipo actual: \n");
+		for (int i = 0; i < registros.size(); i++) {
+			String nombrePokemon = registros.get(i);
+			
+			Pokemon pokemon = null;
+			
+			for (Pokemon p : listaPokemones) {
+				if (p.getPokemon().equals(nombrePokemon)) {
+					pokemon = p;
+				}
+			}
+
+			System.out.println((i + 1) + ")" + registros.get(i) + "|" + pokemon.getTipo() + "|" + "Stats totales: ");
+			}
+			
+		}
+	
+			
+		
 
 		
-	}
+	
 	
 	public static void reescribirRegistros(String txt, ArrayList<String> lista) {
 		try {
@@ -107,13 +130,14 @@ public class menuPrincipal {
 			
 			switch (op) {
 				case 1:
-					revisarEquipo();
+					revisarEquipo(pokemones, registros);
 					break;
 				case 2:
-					salirACapturar(scanner);
+					salirACapturar(scanner, habitats, pokemones, registros);
 					break;
+				case 3:
 					
-					
+					break;	
 				case 8:
 					System.out.println("Saliendo...");
 					break;
