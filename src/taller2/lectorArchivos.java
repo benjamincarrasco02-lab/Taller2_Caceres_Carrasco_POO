@@ -76,6 +76,34 @@ public class lectorArchivos {
 		return registros;
 	}
 	
+	public static ArrayList<Gimnasio> leerGimnasios() {
+		ArrayList<Gimnasio> listaGimnasios = new ArrayList<>();
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("Gimnasios.txt"));
+			String linea;
+			
+			while ((linea = br.readLine()) != null) {
+				String[] partes = linea.split(";");
+				int NumGimnasio = Integer.parseInt(partes[0]);
+				String Lider = partes[1];
+				String Estado = partes[2];
+				ArrayList<String> pokemonesTotales = new ArrayList<>();
+				int cantPokemons = Integer.parseInt(partes[3]);
+				for (int i = 4; i < partes.length; i++) {
+					pokemonesTotales.add(partes[i]);
+				}
+				
+				listaGimnasios.add(new Gimnasio(NumGimnasio, Lider, Estado, cantPokemons, pokemonesTotales));
+			}
+			br.close();
+			
+		} catch (IOException e) {
+			System.out.println("Error al leer el archivo " + e.getMessage());
+		}
+		return listaGimnasios;
+	}
+	
 	
 	
 }

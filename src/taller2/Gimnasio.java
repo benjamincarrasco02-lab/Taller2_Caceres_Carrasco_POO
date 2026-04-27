@@ -1,20 +1,22 @@
 package taller2;
 
+import java.util.ArrayList;
+
 public class Gimnasio {
 	
 	private int NumGimnasio;
 	private String Lider;
 	private String Estado;
 	private int cantPokemons;
-	private String Pokemons;
+	private ArrayList<String> pokemons;
 	
-	public Gimnasio(int numGimnasio, String lider, String estado, int cantPokemons, String pokemons) {
+	public Gimnasio(int numGimnasio, String lider, String estado, int cantPokemons, ArrayList<String> pokemons) {
 		
 		NumGimnasio = numGimnasio;
 		Lider = lider;
 		Estado = estado;
 		this.cantPokemons = cantPokemons;
-		Pokemons = pokemons;
+		this.setPokemons(pokemons);
 	}
 
 	public int getNumGimnasio() {
@@ -49,14 +51,14 @@ public class Gimnasio {
 		this.cantPokemons = cantPokemons;
 	}
 
-	public String getPokemons() {
-		return Pokemons;
+	public ArrayList<String> getPokemons() {
+		return pokemons;
 	}
 
-	public void setPokemons(String pokemons) {
-		Pokemons = pokemons;
+	public void setPokemons(ArrayList<String> pokemons) {
+		this.pokemons = pokemons;
 	}
-	
+
 	
 
 }

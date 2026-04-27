@@ -14,6 +14,7 @@ public class menuPrincipal {
 	//Se llaman las listas
 	static ArrayList<Habitats> habitats = lectorArchivos.leerHabitats();
 	static ArrayList<Pokemon> pokemones = lectorArchivos.leerPokemones();
+	static ArrayList<Gimnasio> gimnasios = lectorArchivos.leerGimnasios();
 	static ArrayList<String> registros = new ArrayList<>();
 	
 	public static void main(String[] args) {
@@ -75,29 +76,58 @@ public class menuPrincipal {
 		return registros;
 	}
 	
-	public static void revisarEquipo(ArrayList<Pokemon> listaPokemones, ArrayList<String> registros) {
+	public static void revisarEquipo(ArrayList<Pokemon> pokemones, ArrayList<String> registros) {
 		
 		System.out.println("Equipo actual: \n");
 		for (int i = 0; i < registros.size(); i++) {
 			String nombrePokemon = registros.get(i);
 			
 			Pokemon pokemon = null;
+			int estadisticas = 0;
 			
-			for (Pokemon p : listaPokemones) {
+			for (Pokemon p : pokemones) {
 				if (p.getPokemon().equals(nombrePokemon)) {
 					pokemon = p;
 				}
 			}
-
-			System.out.println((i + 1) + ")" + registros.get(i) + "|" + pokemon.getTipo() + "|" + "Stats totales: ");
-			}
 			
+			estadisticas += pokemon.getVida() + pokemon.getAtaque() + pokemon.getDefensa() +
+					pokemon.getAtaqueEspecial() + pokemon.getDefensaEspecial() + pokemon.getVelocidad();
+
+			System.out.println((i + 1) + ")" + registros.get(i) + "|" + pokemon.getTipo() + "|" + "Stats totales: " + estadisticas);
+			}
+		System.out.println();
 		}
 	
-			
+	public static void retarGimnasio(ArrayList<Gimnasio> gimnasios, Scanner scanner) {
+		System.out.println("A cual Lider deseas retar??");
 		
-
+		for (int i = 1; i < gimnasios.size(); i++) {
+			System.out.println(i + ") " + gimnasios.get(i).getLider() + " - Estado: " + gimnasios.get(i).getEstado());
+		}
+		System.out.println("9) Volver al menu.\n\nIngrese opcion: ");
 		
+		int op = scanner.nextInt();
+		
+		for (int i = 1; i < gimnasios.size(); i++) {
+			if (op == 1) {
+				System.out.println("Desafiando a " + gimnasios.get(i - 1).getLider() + "!!");
+				break;
+			}
+			else if (op == i) {
+				if ((gimnasios.get(i - 1).getEstado().equals("Sin derrotar"))) {
+					System.out.println("Calmado Entrenador!!! No puedes retar a Dani sin haber derrotado a los lideres anteriores!!");
+				} else {
+					System.out.println("Desafiando a " + gimnasios.get(i - 1).getLider() + "!!");
+					break;
+				}
+			}
+		}
+		
+		
+		
+		System.out.println();
+	}
 	
 	
 	public static void reescribirRegistros(String txt, ArrayList<String> lista) {
@@ -138,6 +168,9 @@ public class menuPrincipal {
 				case 3:
 					
 					break;	
+				case 4:
+					retarGimnasio(gimnasios, scanner);
+					break;
 				case 8:
 					System.out.println("Saliendo...");
 					break;
