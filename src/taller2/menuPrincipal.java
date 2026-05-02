@@ -65,7 +65,7 @@ public class menuPrincipal {
 			int opcion2 = scanner.nextInt();
 			
 			if (opcion2 == 1) {
-				registros.add(pokemonAleatorio);
+				registros.add(pokemonAleatorio + ";Vivo");
 				reescribirRegistros("Registros.txt", registros);
 				System.out.println(pokemonAleatorio + " ha sido agregado a tu equipo!\n");
 			} else {
@@ -80,22 +80,33 @@ public class menuPrincipal {
 		
 		System.out.println("Equipo actual: \n");
 		for (int i = 0; i < registros.size(); i++) {
-			String nombrePokemon = registros.get(i);
 			
-			Pokemon pokemon = null;
+			
+			String[] partes = registros.get(i).split(";");
+	        String nombrePokemon = partes[0];
+	        String estado = partes[1];
+
+	        Pokemon pokemon = null;
+			
+			
 			int estadisticas = 0;
 			
 			for (Pokemon p : pokemones) {
 				if (p.getPokemon().equals(nombrePokemon)) {
 					pokemon = p;
+					break;
 				}
 			}
 			
-			estadisticas += pokemon.getVida() + pokemon.getAtaque() + pokemon.getDefensa() +
-					pokemon.getAtaqueEspecial() + pokemon.getDefensaEspecial() + pokemon.getVelocidad();
+			 if (pokemon != null) {
+		            int stats = pokemon.getVida() + pokemon.getAtaque() + pokemon.getDefensa() +
+		                    pokemon.getAtaqueEspecial() + pokemon.getDefensaEspecial() + pokemon.getVelocidad();
 
-			System.out.println((i + 1) + ")" + registros.get(i) + "|" + pokemon.getTipo() + "|" + "Stats totales: " + estadisticas);
-			}
+		            System.out.println(i + ") " + nombrePokemon + " | " + pokemon.getTipo() +
+		                    " | " + estado + " | Stats totales: " + stats);
+		        }
+		    }
+			
 		System.out.println();
 		}
 	
@@ -145,13 +156,65 @@ public class menuPrincipal {
 	
 	public static void menuContinuar(Scanner scanner) {
 		System.out.println("Sapo");
+		registros = lectorArchivos.leerRegistros();
+
+	    if (registros.isEmpty()) {
+	        System.out.println("No hay partida guardada...");
+	        return;
+	    }
+
+	    String[] datosJugador = registros.get(0).split(";");
+	    String nombre = datosJugador[0];
+	    String medalla = datosJugador[1];
+
+	    System.out.println("Bienvenido de nuevo " + nombre + "!!");
+
+	    int op;
+
+	    do {
+	        System.out.println(nombre + ", ¿Qué deseas hacer?: ");
+	        System.out.println("\n1) Revisar equipo.\n2) Salir a capturar.\n3) Acceso al PC.\n4) Retar un gimnasio.\n5) Desafío al Alto Mando.\n6) Curar Pokémon.\n7) Guardar.\n8) Guardar y Salir.");
+	        System.out.println("Ingrese opción: ");
+
+	        op = scanner.nextInt();
+
+	        switch (op) {
+	            case 1:
+	            	revisarEquipo(pokemones, registros);
+	                break;
+	            case 2:
+	                salirACapturar(scanner, habitats, pokemones, registros);
+	                break;
+	            case 4:
+	                retarGimnasio(gimnasios, scanner);
+	                break;
+	            case 6:
+	                
+	                break;
+	            case 7:
+	                reescribirRegistros("Registros.txt", registros);
+	                System.out.println("Partida guardada!");
+	                break;
+	            case 8:
+	                reescribirRegistros("Registros.txt", registros);
+	                System.out.println("Nos vemos entrenador...");
+	                break;
+	            default:
+	                System.out.println("Opción inválida");
+	        }
+
+	    } while (op != 8);
 	}
+	
 	
 	public static void menuNuevaPartida(Scanner scanner) {
 		int op;
 		System.out.println("Ingrese su apodo de jugador: ");
 		String apodo = scanner.nextLine();
 		System.out.println("Bienvenido " + apodo + "!!");
+		registros.clear();
+		registros.add(apodo + ";none");
+		reescribirRegistros("Registros.txt", registros);
 		do {
 			System.out.println(apodo + ", ¿Qué deseas hacer?: ");
 			System.out.println("\n1) Revisar equipo.\n2) Salir a capturar.\n3) Acceso al PC.\n4) Retar un gimnasio.\n5) Desafío al Alto Mando.\n6) Curar Pokémon.\n7) Guardar.\n8) Guardar y Salir.");
