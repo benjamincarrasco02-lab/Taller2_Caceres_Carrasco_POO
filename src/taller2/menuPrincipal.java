@@ -20,7 +20,13 @@ public class menuPrincipal {
 	public static void main(String[] args) {
 		Scanner scanner = new Scanner(System.in);		
 		menuPrincipall(scanner);
+		
+		
+		
+		scanner.close();
 	}
+	
+	
 
 	
 	public static ArrayList<String> salirACapturar(Scanner scanner, ArrayList<Habitats> habitats, ArrayList<Pokemon> pokemones, ArrayList<String> registros) {
@@ -140,6 +146,31 @@ public class menuPrincipal {
 		System.out.println();
 	}
 	
+	public static void desafioAltoMando(Scanner scanner) {
+		for (Gimnasio g : gimnasios) {
+	        if (g.getEstado().equals("Sin derrotar")) {
+	            System.out.println("Debes derrotar todos los gimnasios primero!");
+	            return;
+	        }
+	    }
+	 
+
+	    
+	}
+	
+	public static void curarPokemones() {
+
+	    for (int i = 1; i < registros.size(); i++) {
+
+	        String[] partes = registros.get(i).split(";");
+	        String nombre = partes[0];
+
+	        registros.set(i, nombre + ";Vivo");
+	    }
+	    reescribirRegistros("Registros.txt", registros);
+
+	    System.out.println("Tu equipo se ha recuperado!");
+	}
 	
 	public static void reescribirRegistros(String txt, ArrayList<String> lista) {
 		try {
@@ -188,8 +219,11 @@ public class menuPrincipal {
 	            case 4:
 	                retarGimnasio(gimnasios, scanner);
 	                break;
+	            case 5:
+	            	desafioAltoMando(scanner);
+	            	break;
 	            case 6:
-	                
+	            	curarPokemones();
 	                break;
 	            case 7:
 	                reescribirRegistros("Registros.txt", registros);
@@ -228,12 +262,20 @@ public class menuPrincipal {
 				case 2:
 					salirACapturar(scanner, habitats, pokemones, registros);
 					break;
-				case 3:
-					
-					break;	
+				
 				case 4:
 					retarGimnasio(gimnasios, scanner);
 					break;
+				case 5:
+	            	desafioAltoMando(scanner);
+	            	break;
+				case 6:
+					curarPokemones();
+					break;	
+				case 7:
+	                reescribirRegistros("Registros.txt", registros);
+	                System.out.println("Partida guardada!");
+	                break;
 				case 8:
 					System.out.println("Saliendo...");
 					break;
