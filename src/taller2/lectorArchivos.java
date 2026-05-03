@@ -104,6 +104,34 @@ public class lectorArchivos {
 		return listaGimnasios;
 	}
 	
+	public static ArrayList<ArrayList<String>> leerAltoMando() {
+	    ArrayList<ArrayList<String>> altoMando = new ArrayList<>();
+
+	    try {
+	        BufferedReader br = new BufferedReader(new FileReader("Alto Mando.txt"));
+	        String linea;
+
+	        while ((linea = br.readLine()) != null) {
+	            String[] partes = linea.split(";");
+
+	            ArrayList<String> miembro = new ArrayList<>();
+
+	            for (int i = 1; i < partes.length; i++) {
+	                miembro.add(partes[i]);
+	            }
+
+	            altoMando.add(miembro);
+	        }
+
+	        br.close();
+	    } catch (IOException e) {
+	        System.out.println("Error al leer Alto Mando");
+	    }
+
+	    return altoMando;
+	}
+	
 	
 	
 }
+	
