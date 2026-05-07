@@ -104,8 +104,8 @@ public class lectorArchivos {
 		return listaGimnasios;
 	}
 	
-	public static ArrayList<ArrayList<String>> leerAltoMando() {
-	    ArrayList<ArrayList<String>> altoMando = new ArrayList<>();
+	public static ArrayList<AltoMando> leerAltoMando() {
+	    ArrayList<AltoMando> altosMandos = new ArrayList<>();
 
 	    try {
 	        BufferedReader br = new BufferedReader(new FileReader("Alto Mando.txt"));
@@ -113,25 +113,27 @@ public class lectorArchivos {
 
 	        while ((linea = br.readLine()) != null) {
 	            String[] partes = linea.split(";");
+	            int numero = Integer.parseInt(partes[0]);
+	            String nombre = partes[1];
+	            ArrayList<String> pokemons = new ArrayList<>();
 
-	            ArrayList<String> miembro = new ArrayList<>();
-
-	            for (int i = 1; i < partes.length; i++) {
-	                miembro.add(partes[i]);
+	            for (int i = 2; i < partes.length; i++) {
+	                pokemons.add(partes[i]);
 	            }
+	            AltoMando miembro = new AltoMando(numero, nombre, pokemons);
 
-	            altoMando.add(miembro);
+	            altosMandos.add(miembro);
 	        }
 
 	        br.close();
+
 	    } catch (IOException e) {
 	        System.out.println("Error al leer Alto Mando");
 	    }
 
-	    return altoMando;
+	    return altosMandos;
 	}
 	
 	
 	
 }
-	
