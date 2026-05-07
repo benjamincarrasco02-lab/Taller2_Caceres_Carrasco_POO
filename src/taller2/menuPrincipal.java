@@ -15,6 +15,7 @@ public class menuPrincipal {
 	static ArrayList<Habitats> habitats = lectorArchivos.leerHabitats();
 	static ArrayList<Pokemon> pokemones = lectorArchivos.leerPokemones();
 	static ArrayList<Gimnasio> gimnasios = lectorArchivos.leerGimnasios();
+	static ArrayList<AltoMando> altoMando = lectorArchivos.leerAltoMando();
 	static ArrayList<String> registros = new ArrayList<>();
 
 	public static void main(String[] args) {
@@ -238,13 +239,29 @@ public class menuPrincipal {
 	
 	
 	public static void desafioAltoMando(Scanner scanner) {
-		for (Gimnasio g : gimnasios) {
-	        if (g.getEstado().equals("Sin derrotar")) {
-	            System.out.println("Debes derrotar todos los gimnasios primero!");
-	            return;
-	        }
-	    }  
-	}
+
+    for (Gimnasio g : gimnasios) {
+
+        if (g.getEstado().equals("Sin derrotar")) {
+            System.out.println("Debes derrotar todos los gimnasios primero!");
+            return;
+        }
+    }
+
+    for (AltoMando miembro : altoMando) {
+        System.out.println("\nTe enfrentas a " + miembro.getNombre() + "!");
+        boolean gano = combate(scanner,registros,pokemones,miembro.getPokemons(),miembro.getNombre());
+        
+        if (!gano) {
+            System.out.println("Has perdido el desafío al Alto Mando...");
+            return;
+        }
+    }
+
+    System.out.println("\nFELICIDADES!!");
+    System.out.println("Te has convertido en campeón!");
+}
+	
 	
 	public static ArrayList<String> pokemonesVivos() {
 
@@ -263,9 +280,9 @@ public class menuPrincipal {
 	}
 	
 	public static Pokemon buscarPokemon(String nombre) {
-
 	    for (Pokemon p : pokemones) {
-	        if (p.getPokemon().equals(nombre)) {
+
+	        if (p.getPokemon().trim().equalsIgnoreCase(nombre.trim())) {
 	            return p;
 	        }
 	    }
@@ -306,6 +323,7 @@ public class menuPrincipal {
 	        System.out.println("No tienes pokemones vivos!");
 	        return false;
 	    }
+	   
 
 	    Pokemon pokemonJugador = buscarPokemon(vivos.get(0));
 
@@ -316,6 +334,9 @@ public class menuPrincipal {
 	        System.out.println("\n" + nombreRival + " saca a " + pokemonRival.getPokemon() + "!");
 	        System.out.println("Tu sacas a " + pokemonJugador.getPokemon() + "!");
 
+	        
+	        
+	        
 	        boolean rivalDerrotado = false;
 
 	        while (!rivalDerrotado) {
