@@ -23,8 +23,6 @@ public class menuPrincipal {
 		
 		scanner.close();
 	}
-	
-	
 
 
 	public static ArrayList<String> salirACapturar(Scanner scanner, ArrayList<Habitats> habitats, ArrayList<Pokemon> pokemones, ArrayList<String> registros) {
@@ -116,38 +114,79 @@ public class menuPrincipal {
 		}
 	
 	public static void accesoPC(Scanner scanner, ArrayList<String> registros) {
-		System.out.println("Estos son todos los pokemones que has capturado: \n");
-		
-		for (int i = 1; i < registros.size(); i++) {
-			String[] partes = registros.get(i).split(";");
-			System.out.println(i + ") " + partes[0]);
-		}
-		System.out.println("\n¿Qué deseas hacer?\n1) Cambiar Pokémon.\n2) Salir.");
-		int op = scanner.nextInt();
-		
-		while (op > 2) {
-			System.out.println("Opción inválida. Intente de nuevo");
-			op = scanner.nextInt();
-		}
-		
-		if (op == 1) {
-			
-		} else {
-			System.out.println("Saliendo...");
-		}
-		
-		
-	
+
+	    if (registros.size() <= 1) {
+	        System.out.println("No tienes pokemones capturados!");
+	        return;
+	    }
+
+	    System.out.println("Estos son todos los pokemones que has capturado:\n");
+
+	    for (int i = 1; i < registros.size(); i++) {
+
+	        String[] partes = registros.get(i).split(";");
+
+	        if (i <= 6) {
+	            System.out.println(i + ") " + partes[0] + " -> En tu equipo");
+	        } else {
+	            System.out.println(i + ") " + partes[0] + " -> En el Pc");
+	        }
+	    }
+
+	    System.out.println("\n¿Qué deseas hacer?");
+	    System.out.println("1) Cambiar Pokémon.");
+	    System.out.println("2) Salir.");
+
+	    int op = scanner.nextInt();
+
+	    while (op < 1 || op > 2) {
+	        System.out.println("Opción inválida.");
+	        op = scanner.nextInt();
+	    }
+
+	    if (op == 1) {
+
+	        if (registros.size() <= 2) {
+	            System.out.println("No tienes suficientes pokemones para intercambiar.");
+	            return;
+	        }
+
+	        System.out.println("\nIngrese el número del primer pokemon:");
+	        int p1 = scanner.nextInt();
+
+	        while (p1 < 1 || p1 >= registros.size()) {
+	            System.out.println("Número inválido.");
+	            p1 = scanner.nextInt();
+	        }
+
+	        System.out.println("Ingrese el número del segundo pokemon:");
+	        int p2 = scanner.nextInt();
+
+	        while (p2 < 1 || p2 >= registros.size()) {
+	            System.out.println("Número inválido.");
+	            p2 = scanner.nextInt();
+	        }
+
+	        String aux = registros.get(p1);
+
+	        registros.set(p1, registros.get(p2));
+	        registros.set(p2, aux);
+
+	        reescribirRegistros("Registros.txt", registros);
+
+	        System.out.println("Pokemones intercambiados correctamente!");
+
+	    } else {
+
+	        System.out.println("Saliendo del PC...");
+	    }
 	}
 
 	public static void retarGimnasio(ArrayList<Gimnasio> gimnasios, Scanner scanner) {
 	    System.out.println("A cual Lider deseas retar??");
 
 	    for (int i = 0; i < gimnasios.size(); i++) {
-	        System.out.println((i + 1) + ") "
-	                + gimnasios.get(i).getLider()
-	                + " - Estado: "
-	                + gimnasios.get(i).getEstado());
+	        System.out.println((i + 1) + ") "+ gimnasios.get(i).getLider()+ " - Estado: "+ gimnasios.get(i).getEstado());
 	    }
 
 	    System.out.println("9) Volver al menu.");
@@ -183,11 +222,12 @@ public class menuPrincipal {
 
 	    if (gano) {
 	        gimnasioElegido.setEstado("Derrotado");
+	        reescribirGimnasios("Gimnasios.txt", gimnasios);
 	        String[] datos = registros.get(0).split(";");
 	        registros.set(0,datos[0] + ";" + gimnasioElegido.getLider());
 	        reescribirRegistros("Registros.txt", registros);
 
-	        System.out.println("Has conseguido una nueva medalla!");
+	        System.out.println("Has conseguido una nueva medalla");
 
 	    } else {
 	        System.out.println("Perdiste");
@@ -447,6 +487,25 @@ public class menuPrincipal {
 			System.out.println("Error al modificar el texto" + e.getMessage());
 		}
 	}
+	
+	public static void reescribirGimnasios(String txt, ArrayList<Gimnasio> gimnasios) {
+	    try {
+	        BufferedWriter bw = new BufferedWriter(new FileWriter(txt));
+	        for (Gimnasio g : gimnasios) {
+	            String linea =g.getNumGimnasio() + ";"+ g.getLider() + ";"+ g.getEstado() + ";"+ g.getPokemons().size();
+
+	            for (String pokemon : g.getPokemons()) {
+	                linea += ";" + pokemon;
+	            }
+	            bw.write(linea);
+	            bw.newLine();
+	        }
+	        bw.close();
+
+	    } catch (IOException e) {
+	        System.out.println("Error al modificar gimnasios: " + e.getMessage());
+	    }
+	}
 
 	public static void menuContinuar(Scanner scanner) {
 		registros = lectorArchivos.leerRegistros();
@@ -511,6 +570,11 @@ public class menuPrincipal {
 		String apodo = scanner.nextLine();
 		System.out.println("Bienvenido " + apodo + "!!");
 		registros.clear();
+		for (Gimnasio g : gimnasios) {
+	        g.setEstado("Sin derrotar");
+	    }
+		
+		reescribirGimnasios("Gimnasios.txt", gimnasios);
 		registros.add(apodo + ";none");
 		reescribirRegistros("Registros.txt", registros);
 		do {
