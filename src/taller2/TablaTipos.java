@@ -24,5 +24,25 @@ public class TablaTipos {
 	        {  1.0, 0.5, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 0.5, 2.0, 1.0 }  // HADA
 	    };
 	
+	static String[] tipoPokemon = {"Normal","Fuego","Agua","Planta","Electrico","Hielo","Lucha","Veneno","Tierra","Volador","Psiquico","Bicho","Roca","Fantasma","Dragon","Acero","Siniestro","Hada"};
+	
+	public static double obtenerEfectividad(String atacante, String defensor) {
+
+        int fila = -1;
+        int columna = -1;
+        for (int i = 0; i < tipoPokemon.length; i++) {
+            if (tipoPokemon[i].equalsIgnoreCase(atacante)) {
+                fila = i;
+            }
+            if (tipoPokemon[i].equalsIgnoreCase(defensor)) {
+                columna = i;
+            }
+        }
+        if (fila == -1 || columna == -1) {
+            return 1.0;
+        }
+        return EFECTIVIDAD[fila][columna];
+    }
+	
 	
 }
