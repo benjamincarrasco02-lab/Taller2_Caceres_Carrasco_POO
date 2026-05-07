@@ -157,7 +157,7 @@ public class menuPrincipal {
 			}
 			else if (op == i) {
 				if ((gimnasios.get(i - 1).getEstado().equals("Sin derrotar"))) {
-					System.out.println("Calmado Entrenador!!! No puedes retar a Dani sin haber derrotado a los lideres anteriores!!");
+					System.out.println("Calmado Entrenador!!! No puedes retar a "+ gimnasios.get(i).getLider() + " sin haber derrotado a los lideres anteriores!!");
 				} else {
 					System.out.println("Desafiando a " + gimnasios.get(i - 1).getLider() + "!!");
 					
