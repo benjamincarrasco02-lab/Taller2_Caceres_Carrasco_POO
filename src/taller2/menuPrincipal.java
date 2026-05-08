@@ -39,12 +39,23 @@ public class menuPrincipal {
 		System.out.println("7) Volver al menu.");
 		System.out.println("\nIngrese Zona: ");
 
-		int opcion = scanner.nextInt();
+		int opcion;
+		try {
+	        opcion = Integer.parseInt(scanner.nextLine());
+	        } catch(Exception e) {
+	        	opcion = 10;
+	        	
+	        }
 
-		while (opcion > 7) {
-			System.out.println("Opción inválida");
+		while (opcion < 1 || opcion > 7) {
+			System.out.println("\nOpción inválida");
 			System.out.println("Ingrese Zona: ");
-			opcion = scanner.nextInt();
+			try {
+		        opcion = Integer.parseInt(scanner.nextLine());
+		        } catch(Exception e) {
+		        	opcion = 10;
+		        	
+		        }
 		}
 
 		if (opcion == 7) {
@@ -65,7 +76,14 @@ public class menuPrincipal {
 			String pokemonAleatorio = pokemonesEspecificos.get(rand.nextInt(pokemonesEspecificos.size()));
 			System.out.print("Oh!! Ha aparecido un increíble " + pokemonAleatorio + "!!");
 			System.out.println("\n¿Qué deseas hacer?\n1) Capturar. \n2) Huir.");
-			int opcion2 = scanner.nextInt();
+			int opcion2;
+			try {
+				opcion2 = Integer.parseInt(scanner.nextLine());
+    	        } catch(Exception e) {
+    	        	
+    	        	opcion2 = 0;
+    	        	
+    	        }
 
 			if (opcion2 == 1) {
 				if (!registros.get(0).contains(pokemonAleatorio)) {
@@ -138,11 +156,25 @@ public class menuPrincipal {
 	    System.out.println("1) Cambiar Pokémon.");
 	    System.out.println("2) Salir.");
 
-	    int op = scanner.nextInt();
+	    int op;
+	    try {
+	        System.out.println("Ingrese opción: ");
+	        op = Integer.parseInt(scanner.nextLine());
+	        } catch(Exception e) {
+	        	op = 0;
+	        	
+	        }
 
 	    while (op < 1 || op > 2) {
 	        System.out.println("Opción inválida.");
-	        op = scanner.nextInt();
+	        try {
+		        System.out.println("Ingrese opción: ");
+		        op = Integer.parseInt(scanner.nextLine());
+		        } catch(Exception e) {
+		        	
+		        	op = 0;
+		        	
+		        }
 	    }
 
 	    if (op == 1) {
@@ -153,19 +185,44 @@ public class menuPrincipal {
 	        }
 
 	        System.out.println("\nIngrese el número del primer pokemon:");
-	        int p1 = scanner.nextInt();
+	        int p1;
+	        try {
+    	        p1 = Integer.parseInt(scanner.nextLine());
+    	        } catch(Exception e) {
+    	        	p1 = 0;
+    	        	
+    	        }
 
 	        while (p1 < 1 || p1 >= registros.size()) {
 	            System.out.println("Número inválido.");
-	            p1 = scanner.nextInt();
+	            try {
+	    	        p1 = Integer.parseInt(scanner.nextLine());
+	    	        } catch(Exception e) {
+	    	        
+	    	        	p1 = 0;
+	    	        	
+	    	        }
 	        }
 
 	        System.out.println("Ingrese el número del segundo pokemon:");
-	        int p2 = scanner.nextInt();
+	        int p2;
+	        try {
+    	        p2 = Integer.parseInt(scanner.nextLine());
+    	        } catch(Exception e) {
+    	        	
+    	        	p2 = 0;
+    	        	
+    	        }
 
 	        while (p2 < 1 || p2 >= registros.size()) {
 	            System.out.println("Número inválido.");
-	            p2 = scanner.nextInt();
+	            try {
+	    	        p2 = Integer.parseInt(scanner.nextLine());
+	    	        } catch(Exception e) {
+	    	        	
+	    	        	p2 = 0;
+	    	        	
+	    	        }
 	        }
 
 	        String aux = registros.get(p1);
@@ -193,7 +250,14 @@ public class menuPrincipal {
 	    System.out.println("9) Volver al menu.");
 	    System.out.println("\nIngrese opcion: ");
 
-	    int op = scanner.nextInt();
+	    int op;
+	    try {
+	        op = Integer.parseInt(scanner.nextLine());
+	        } catch(Exception e) {
+	        	
+	        	op = 0;
+	        	
+	        }
 
 	    if (op == 9) {
 	        System.out.println("Volviendo al menu...");
@@ -346,7 +410,14 @@ public class menuPrincipal {
 	            System.out.println("2) Cambiar pokemon");
 	            System.out.println("3) Rendirse");
 
-	            int op = scanner.nextInt();
+	            int op;
+	            try {
+	    	        op = Integer.parseInt(scanner.nextLine());
+	    	        } catch(Exception e) {
+	    	        	
+	    	        	op = 0;
+	    	        	
+	    	        }
 
 	            switch (op) {
 
@@ -424,11 +495,24 @@ public class menuPrincipal {
 
 	                        System.out.println("Elige un pokemon:");
 
-	                        int cambio = scanner.nextInt();
+	                        int cambio;
+	                        try {
+	                	        cambio = Integer.parseInt(scanner.nextLine());
+	                	        } catch(Exception e) {
+	                	        	
+	                	        	cambio = 0;
+	                	        	
+	                	        }
 
 	                        while (cambio < 1 || cambio > vivos.size()) {
 	                            System.out.println("Opcion invalida");
-	                            cambio = scanner.nextInt();
+	                            try {
+		                	        cambio = Integer.parseInt(scanner.nextLine());
+		                	        } catch(Exception e) {
+		                	        	
+		                	        	cambio = 0;
+		                	        	
+		                	        }
 	                        }
 
 	                        pokemonJugador = buscarPokemon(vivos.get(cambio - 1));
@@ -453,11 +537,24 @@ public class menuPrincipal {
 
 	                    System.out.println("Seleccione pokemon:");
 
-	                    int cambio = scanner.nextInt();
+	                    int cambio;
+	                    try {
+                	        cambio = Integer.parseInt(scanner.nextLine());
+                	        } catch(Exception e) {
+                	        	
+                	        	cambio = 0;
+                	        	
+                	        }
 
 	                    while (cambio < 1 || cambio > vivos.size()) {
 	                        System.out.println("Opcion invalida");
-	                        cambio = scanner.nextInt();
+	                        try {
+	                	        cambio = Integer.parseInt(scanner.nextLine());
+	                	        } catch(Exception e) {
+	                	        	
+	                	        	cambio = 0;
+	                	        	
+	                	        }
 	                    }
 
 	                    pokemonJugador = buscarPokemon(vivos.get(cambio - 1));
@@ -543,14 +640,18 @@ public class menuPrincipal {
 	    System.out.println("Bienvenido de nuevo " + nombre + "!!");
 
 	    int op;
-
+	    
 	    do {
 	        System.out.println(nombre + ", ¿Qué deseas hacer?: ");
 	        System.out.println("\n1) Revisar equipo.\n2) Salir a capturar.\n3) Acceso al PC.\n4) Retar un gimnasio.\n5) Desafío al Alto Mando.\n6) Curar Pokémon.\n7) Guardar.\n8) Guardar y Salir.");
+	        try {
 	        System.out.println("Ingrese opción: ");
-
-	        op = scanner.nextInt();
-
+	        op = Integer.parseInt(scanner.nextLine());
+	        } catch(Exception e) {
+	        	
+	        	op = 0;
+	        	
+	        }
 	        switch (op) {
 	            case 1:
 	            	revisarEquipo(pokemones, registros);
@@ -601,8 +702,14 @@ public class menuPrincipal {
 		do {
 			System.out.println(apodo + ", ¿Qué deseas hacer?: ");
 			System.out.println("\n1) Revisar equipo.\n2) Salir a capturar.\n3) Acceso al PC (cambiar Pokémon del equipo).\n4) Retar un gimnasio.\n5) Desafío al Alto Mando.\n6) Curar Pokémon.\n7) Guardar.\n8) Guardar y Salir.");
-			System.out.println("Ingrese opción: ");
-			op = scanner.nextInt();
+			try {
+		        System.out.println("Ingrese opción: ");
+		        op = Integer.parseInt(scanner.nextLine());
+		        } catch(Exception e) {
+		        	
+		        	op = 0;
+		        	
+		        }
 
 			switch (op) {
 				case 1:
@@ -646,7 +753,13 @@ public class menuPrincipal {
 		do {
 			System.out.println("Bienvenido al juego!\nIngrese alguna de las siguientes opciones: ");
 			System.out.println("1) Continuar.\n2) Nueva partida.\n3) Salir.");
-			op = Integer.parseInt(scanner.nextLine());
+			try {
+		        op = Integer.parseInt(scanner.nextLine());
+		        } catch(Exception e) {
+		        	
+		        	op = 0;
+		        	
+		        }
 
 			switch (op) {
 				case 1: 
